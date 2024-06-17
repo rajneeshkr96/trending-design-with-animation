@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="hero-img">
+        <img src="https://images.unsplash.com/photo-1475257026007-0753d5429e10?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
+    </div>
+    <div class="container">
+        <div class="word">
+            the
+        </div>
+        <div class="word">
+            game
+        </div>
+        <div class="word">
+            is
+        </div>
+        <div class="word">
+            begins
+        </div>
+    </div>
+    <script>
+        const words = document.querySelectorAll('.word');
+        words.forEach(element => {
+            let val = element.textContent.slice().trim();
+            element.textContent = "";
+            for (let i = 0; i < val.length; i++) {
+                var x = document.createElement("span");
+                x.textContent = val[i];
+                element.appendChild(x); 
+            }
+        });
+        
+       const defaultScale = 1;
+       const maxScale = 2;
+       const neighborScale = 1.5; 
+        words.forEach(text=>{
+            const spans = text.querySelectorAll("span");
+            text.addEventListener("mouseover",(e)=>{
+                const target = e.target;
+                const index = Array.from(spans).indexOf(target);
+                spans.forEach((span,i)=>{
+                    let scale = defaultScale;
+                    if(index === i){
+                        scale = maxScale;
+                        console.log("me...")
+                    } else if(i === index - 1 || i=== index +1 ){
+                       scale = neighborScale; 
+                    }
+                 span.style.transform = `scaleY(${scale})`;
+                })
+            });
+
+            text.addEventListener("mouseleave",(e)=>{
+                spans.forEach((span,i)=>{
+                 span.style.transform = `scaleY(${defaultScale})`;
+                })
+            });
+            
+        })
+        
+    </script>
+    
+</body>
+</html>
