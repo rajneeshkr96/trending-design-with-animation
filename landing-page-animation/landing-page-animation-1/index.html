@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Landing Page Design </title>
+		<link rel="stylesheet" href="styles.css" />
+		<script src="https://unpkg.co/gsap/dist/gsap.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenMax.min.js"></script>
+	</head>
+	<body>
+		<div class="wrapper">
+			<div class="site-logo">cartoon</div>
+			<div class="navbar">
+				<div class="site-info">photos / films</div>
+				<div class="site-menu">
+					<div class="menu-item">projects</div>
+					<div class="menu-item">about</div>
+					<div class="menu-item">contact</div>
+				</div>
+			</div>
+			<div class="header">
+				<div class="header-left">
+					elevated<br /><span>reality</span>
+					<div class="link"><a href="#">view showreel</a></div>
+				</div>
+				<div class="header-right">/all projects</div>
+			</div>
+			<div class="container">
+				<div class="container-items">
+					<div class="container-img-wrap">
+						<div class="container-img"></div>
+					</div>
+					<div class="item">
+						<a href="#" class="container-item" data-img="https://w0.peakpx.com/wallpaper/331/764/HD-wallpaper-onward-movie-poster-movies-2020-cartoon-animation-hollywood.jpg">
+							<h3>1</h3>
+						</a>
+					</div>
+					<div class="item">
+						<a href="#" class="container-item" data-img="https://i.pinimg.com/736x/f0/40/e1/f040e1d58302a2b9a4470d274772f505.jpg">
+							<h3>2</h3>
+						</a>
+					</div>
+					<div class="item">
+						<a href="#" class="container-item" data-img="https://image.tmdb.org/t/p/original/Re9I5tauOspaJxYCIqRqavKT4F.jpg">
+							<h3>3</h3>
+						</a>
+					</div>
+					<div class="item">
+						<a href="#" class="container-item" data-img="https://img.fruugo.com/product/4/61/14446614_0340_0340.jpg">
+							<h3>4</h3>
+						</a>
+					</div>
+					<div class="item">
+						<a href="#" class="container-item" data-img="https://i.pinimg.com/736x/cc/2f/33/cc2f3330193f4d1950850b458b985e5d.jpg">
+							<h3>5</h3>
+						</a>
+					</div>
+					<div class="item">
+						<a href="#" class="container-item" data-img="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRR5BHOYyVAJ8upq6gk8tceXeQsx5TCMdrIrg&usqp=CAU">
+							<h3>6</h3>
+						</a>
+					</div>
+					<div class="item">
+						<a href="#" class="container-item" data-img="https://i.pinimg.com/originals/f7/f7/37/f7f7379edd3cedc30dd32651920f3dba.jpg">
+							<h3>7</h3>
+						</a>
+					</div>
+					<div class="item">
+						<a href="#" class="container-item" data-img="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTII0gLYYJDNJQ6U2DtTtp0lqm0Wcj-sjsk-bJRv51c3igI5NmLibYYZE7pwobF0nQ1Q28&usqp=CAU">
+							<h3>8</h3>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script>
+		const allcontainer = gsap.utils.toArray(".container-item");
+		const venueImageWrap = document.querySelector(".container-img-wrap");
+		const venueImage = document.querySelector(".container-img");
+
+		function initcontainer() {
+			allcontainer.forEach((link) => {
+				link.addEventListener("mouseenter", venueHover);
+				link.addEventListener("mouseleave", venueHover);
+				link.addEventListener("mousemove", moveVenueImage);
+			});
+		}
+
+		function moveVenueImage(e) {
+			let xpos = e.clientX;
+			let ypos = e.clientY;
+			const tl = gsap.timeline();
+			tl.to(venueImageWrap, {
+				x: xpos,
+				y: ypos,
+
+			});
+		}
+
+		function venueHover(e) {
+			if (e.type === "mouseenter") {
+				const targetImage = e.target.dataset.img;
+
+				const tl = gsap.timeline();
+				tl.set(venueImage, {
+					backgroundImage: `url(${targetImage})`,
+				}).to(venueImageWrap, {
+					duration: 0.5,
+					autoAlpha: 1,
+				});
+			} else if (e.type === "mouseleave") {
+				const tl = gsap.timeline();
+				tl.to(venueImageWrap, {
+					duration: 0.5,
+					autoAlpha: 0,
+				});
+			}
+		}
+
+		function init() {
+			initcontainer();
+		}
+
+		window.addEventListener("load", function () {
+			init();
+		});
+
+		tl = new TimelineMax();
+
+		tl.from(".navbar > div", 1.6, {
+			opacity: 0,
+			y: 60,
+			ease: Expo.easeInOut,
+			delay: 0.6,
+		});
+
+		tl.from(
+			".site-logo",
+			1.6,
+			{
+				opacity: 0,
+				y: 40,
+				ease: Expo.easeInOut,
+			},
+			"-=1.6"
+		);
+
+		tl.staggerFrom(
+			".site-menu > div",
+			1,
+			{
+				opacity: 0,
+				y: 60,
+				ease: Power2.easeOut,
+			},
+			0.2
+		);
+
+		tl.staggerFrom(
+			".header > div",
+			1,
+			{
+				opacity: 0,
+				y: 60,
+				ease: Power2.easeOut,
+				delay: -1.4,
+			},
+			0.2
+		);
+	</script>
+</html>
